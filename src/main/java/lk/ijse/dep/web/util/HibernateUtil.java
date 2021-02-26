@@ -1,5 +1,9 @@
 package lk.ijse.dep.web.util;
 
+import lk.ijse.dep.web.entity.Customer;
+import lk.ijse.dep.web.entity.Item;
+import lk.ijse.dep.web.entity.Order;
+import lk.ijse.dep.web.entity.OrderDetail;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -31,7 +35,10 @@ public class HibernateUtil {
                 .build();
 
         Metadata metadata = new MetadataSources( standardRegistry )
-//                .addAnnotatedClass()   //todo: register entities customer, item and others
+                .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(Item.class)
+                .addAnnotatedClass(Order.class)
+                .addAnnotatedClass(OrderDetail.class)
                 .getMetadataBuilder()
                 .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
                 .build();
