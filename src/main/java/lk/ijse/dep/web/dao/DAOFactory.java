@@ -1,5 +1,7 @@
 package lk.ijse.dep.web.dao;
 
+import lk.ijse.dep.web.dao.custom.impl.*;
+
 /**
  * @author : Lucky Prabath <lucky.prabath94@gmail.com>
  * @since : 2021-02-26
@@ -16,7 +18,16 @@ public class DAOFactory {
 
     public <T extends SuperDAO> T getDAO(DAOTypes daoTypes){
         switch (daoTypes){
-            //todo: complete dao types
+            case CUSTOMER:
+                return (T) new CustomerDAOImpl();
+            case ITEM:
+                return (T) new ItemDAOImpl();
+            case ORDER:
+                return (T) new OrderDAOImpl();
+            case ORDER_DETAIL:
+                return (T) new OrderDetailDAOImpl();
+            case QUERY:
+                return (T) new QueryDAOImpl();
             default:
                 return null;
         }
