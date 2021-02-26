@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @Data @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "item")
-public class Item implements Serializable {
+public class Item implements SuperEntity {
 
     @Id
     private String code;
