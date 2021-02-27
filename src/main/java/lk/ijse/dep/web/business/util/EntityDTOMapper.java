@@ -7,6 +7,8 @@ import lk.ijse.dep.web.dto.OrderDetailDTO;
 import lk.ijse.dep.web.entity.*;
 import lk.ijse.dep.web.util.HibernateUtil;
 import org.hibernate.Session;
+
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
@@ -18,6 +20,8 @@ import java.util.List;
  * @author : Lucky Prabath <lucky.prabath94@gmail.com>
  * @since : 2021-02-26
  **/
+
+@Mapper
 public interface EntityDTOMapper {
 
     EntityDTOMapper instance = Mappers.getMapper(EntityDTOMapper.class);
