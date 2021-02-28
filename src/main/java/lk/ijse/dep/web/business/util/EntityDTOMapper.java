@@ -1,5 +1,7 @@
 package lk.ijse.dep.web.business.util;
 
+import lk.ijse.dep.web.AppInitializer;
+import lk.ijse.dep.web.dao.custom.CustomerDAO;
 import lk.ijse.dep.web.dto.CustomerDTO;
 import lk.ijse.dep.web.dto.ItemDTO;
 import lk.ijse.dep.web.dto.OrderDTO;
@@ -52,7 +54,13 @@ public interface EntityDTOMapper {
 
     default Customer getCustomer(OrderDTO dto){
         try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            return session.get(Customer.class, dto.getCustomerId());
+            CustomerDAO customerDAO = AppInitializer.getContext().getBean(CustomerDAO.class);
+            try {
+                customerDAO.setSession(session);
+                return customerDAO.get(dto.getCustomerId());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
