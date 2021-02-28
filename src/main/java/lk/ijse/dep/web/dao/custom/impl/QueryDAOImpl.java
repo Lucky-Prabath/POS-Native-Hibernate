@@ -3,6 +3,7 @@ package lk.ijse.dep.web.dao.custom.impl;
 import lk.ijse.dep.web.dao.custom.QueryDAO;
 import lk.ijse.dep.web.entity.CustomEntity;
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -13,6 +14,8 @@ import java.util.List;
  * @author : Lucky Prabath <lucky.prabath94@gmail.com>
  * @since : 2021-02-26
  **/
+
+@Component
 public class QueryDAOImpl implements QueryDAO {
 
     private Session session;
