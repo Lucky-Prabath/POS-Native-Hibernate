@@ -23,7 +23,7 @@ import java.util.List;
  * @since : 2021-02-26
  **/
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface EntityDTOMapper {
 
     EntityDTOMapper instance = Mappers.getMapper(EntityDTOMapper.class);
@@ -52,16 +52,9 @@ public interface EntityDTOMapper {
         return Date.valueOf(dto.getOrderDate());
     }
 
-    default Customer getCustomer(OrderDTO dto){
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
-            CustomerDAO customerDAO = AppInitializer.getContext().getBean(CustomerDAO.class);
-            try {
-                customerDAO.setSession(session);
-                return customerDAO.get(dto.getCustomerId());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+    default Customer getCustomer(OrderDTO dto) throws Exception {
+        CustomerDAO customerDAO = AppInitializer.getContext().getBean(CustomerDAO.class);
+        return customerDAO.get(dto.getCustomerId());
     }
 
     /*order detail conversions--------------------*/

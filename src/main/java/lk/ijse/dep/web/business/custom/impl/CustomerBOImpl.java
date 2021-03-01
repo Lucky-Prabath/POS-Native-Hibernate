@@ -23,7 +23,8 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Autowired
     private CustomerDAO customerDAO;
-    private EntityDTOMapper mapper = EntityDTOMapper.instance;
+    @Autowired
+    private EntityDTOMapper mapper;
 
     public CustomerBOImpl(){
     }

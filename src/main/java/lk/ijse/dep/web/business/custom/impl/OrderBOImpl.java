@@ -34,7 +34,8 @@ public class OrderBOImpl implements OrderBO {
     private ItemDAO itemDAO;
     @Autowired
     private CustomerDAO customerDAO;
-    private EntityDTOMapper mapper = EntityDTOMapper.instance;
+    @Autowired
+    private EntityDTOMapper mapper;
 
     public OrderBOImpl() {
     }
