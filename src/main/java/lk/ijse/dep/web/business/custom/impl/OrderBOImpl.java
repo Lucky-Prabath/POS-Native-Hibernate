@@ -12,6 +12,8 @@ import lk.ijse.dep.web.entity.OrderDetail;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +22,8 @@ import java.util.List;
  * @since : 2021-02-26
  **/
 
-@Component
+@Service
+@Transactional
 public class OrderBOImpl implements OrderBO {
 
     @Autowired
@@ -31,24 +34,13 @@ public class OrderBOImpl implements OrderBO {
     private ItemDAO itemDAO;
     @Autowired
     private CustomerDAO customerDAO;
-    private Session session;
     private EntityDTOMapper mapper = EntityDTOMapper.instance;
 
     public OrderBOImpl() {
     }
 
     @Override
-    public void setSession(Session session) throws Exception {
-        this.session = session;
-        itemDAO.setSession(session);
-        orderDAO.setSession(session);
-        orderDetailDAO.setSession(session);
-        customerDAO.setSession(session);
-    }
-
-    @Override
     public void placeOrder(OrderDTO dto) throws Exception {
-        session.beginTransaction();
         try {
             boolean result = false;
 
@@ -69,11 +61,7 @@ public class OrderBOImpl implements OrderBO {
                 itemDAO.update(item);
 
             }
-
-            session.getTransaction().commit();
-
         } catch (Throwable t) {
-            session.getTransaction().rollback();
             throw t;
         }
     }

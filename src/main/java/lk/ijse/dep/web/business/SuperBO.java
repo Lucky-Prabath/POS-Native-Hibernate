@@ -8,5 +8,4 @@ import org.hibernate.Session;
  **/
 public interface SuperBO {
 
-    void setSession(Session session) throws Exception;
 }
