@@ -1,12 +1,16 @@
 package lk.ijse.dep.web;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -18,6 +22,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
+@EnableTransactionManagement
 public class HibernateConfig {
 
     @Autowired
@@ -51,5 +56,10 @@ public class HibernateConfig {
         prop.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
         prop.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
         return prop;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(SessionFactory sessionFactory){
+        return  new HibernateTransactionManager(sessionFactory);
     }
 }
