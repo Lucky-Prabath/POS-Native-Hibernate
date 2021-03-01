@@ -38,6 +38,10 @@ dependencies {
 
 //    ------for spring-core
     implementation group: 'org.springframework', name: 'spring-context', version: '5.3.4'
+
+    // -------for data access
+    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.4'
+
 }
 
 
