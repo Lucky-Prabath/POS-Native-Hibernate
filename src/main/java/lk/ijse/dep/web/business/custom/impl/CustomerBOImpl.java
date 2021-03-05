@@ -44,6 +44,7 @@ public class CustomerBOImpl implements CustomerBO {
         customerDAO.delete(customerId);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CustomerDTO> findAllCustomers() throws Exception {
         List<CustomerDTO> collect = mapper.getCustomerDTOs(customerDAO.getAll());

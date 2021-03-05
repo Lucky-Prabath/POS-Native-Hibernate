@@ -7,8 +7,7 @@ import lk.ijse.dep.web.dto.ItemDTO;
 import lk.ijse.dep.web.dto.OrderDTO;
 import lk.ijse.dep.web.dto.OrderDetailDTO;
 import lk.ijse.dep.web.entity.*;
-import lk.ijse.dep.web.util.HibernateUtil;
-import org.hibernate.Session;
+
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
