@@ -50,4 +50,9 @@ public class CustomerBOImpl implements CustomerBO {
         List<CustomerDTO> collect = mapper.getCustomerDTOs(customerDAO.getAll());
         return collect;
     }
+
+    @Override
+    public CustomerDTO findCustomer(String customerId) throws Exception {
+        return mapper.getCustomerDTO(customerDAO.get(customerId));
+    }
 }

@@ -49,4 +49,9 @@ public class ItemBOImpl implements ItemBO {
         List<ItemDTO> collect = mapper.getItemDTOs(itemDAO.getAll());
         return collect;
     }
+
+    @Override
+    public ItemDTO findItem(String itemCode) throws Exception {
+        return mapper.getItemDTO(itemDAO.get(itemCode));
+    }
 }

@@ -21,10 +21,10 @@ dependencies {
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
     implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.8.0'
-    implementation group: 'javax.json', name: 'javax.json-api', version: '1.1.4'
-    implementation group: 'org.glassfish', name: 'javax.json', version: '1.1.4'
-    implementation group: 'javax.json.bind', name: 'javax.json.bind-api', version: '1.0'
-    implementation group: 'org.eclipse', name: 'yasson', version: '1.0.8'
+//    implementation group: 'javax.json', name: 'javax.json-api', version: '1.1.4'
+//    implementation group: 'org.glassfish', name: 'javax.json', version: '1.1.4'
+//    implementation group: 'javax.json.bind', name: 'javax.json.bind-api', version: '1.0'
+//    implementation group: 'org.eclipse', name: 'yasson', version: '1.0.8'
     implementation group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.30'
 
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.27.Final'
@@ -37,10 +37,18 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.13.1'
 
 //    ------for spring-core
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.4'
+//    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.4' //available in spring webmvc
 
     // -------for data access
     implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.4'
+
+    //------for spring web mvc
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.4'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.2'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.2'
+
 
 }
 
