@@ -18,4 +18,6 @@ public interface ItemBO extends SuperBO {
     void deleteItem(String code) throws Exception;
 
     List<ItemDTO> findAllItems() throws Exception;
+
+    ItemDTO findItem(String itemCode) throws Exception;
 }
