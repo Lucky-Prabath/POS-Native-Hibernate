@@ -1,7 +1,6 @@
 package lk.ijse.dep.web.api;
 
-import lk.ijse.dep.web.business.BOFactory;
-import lk.ijse.dep.web.business.BOTypes;
+import lk.ijse.dep.web.AppInitializer;
 import lk.ijse.dep.web.business.custom.CustomerBO;
 import lk.ijse.dep.web.dto.CustomerDTO;
 import lk.ijse.dep.web.exception.HttpResponseException;
@@ -44,12 +43,12 @@ public class CustomerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Jsonb jsonb = JsonbBuilder.create();
 
-        final SessionFactory sf = (SessionFactory) getServletContext().getAttribute("sf");
-
-        try (Session session = sf.openSession()) {
+        try  {
             resp.setContentType("application/json");
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
-            customerBO.setSession(session);
+
+            /*get BO from spring container*/
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+
             resp.getWriter().println(jsonb.toJson(customerBO.findAllCustomers()));
 
         } catch (Throwable t) {
@@ -60,17 +59,17 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Jsonb jsonb = JsonbBuilder.create();
-        final SessionFactory sf = (SessionFactory) getServletContext().getAttribute("sf");
 
-        try (Session session = sf.openSession()) {
+        try  {
             CustomerDTO dto = jsonb.fromJson(req.getReader(), CustomerDTO.class);
 
             if (dto.getId() == null || dto.getId().trim().isEmpty() || dto.getName() == null || dto.getName().trim().isEmpty() || dto.getAddress() == null || dto.getAddress().trim().isEmpty()) {
                 throw new HttpResponseException(400, "Invalid customer details", null);
             }
 
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
-            customerBO.setSession(session);
+            /*get BO from spring container*/
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+
             customerBO.saveCustomer(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);
             resp.setContentType("application/json");
@@ -86,9 +85,9 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final SessionFactory sf = (SessionFactory) getServletContext().getAttribute("sf");
 
-        try (Session session = sf.openSession()) {
+
+        try {
 
             if (req.getPathInfo() == null || req.getPathInfo().replace("/", "").trim().isEmpty()) {
                 throw new HttpResponseException(400, "Invalid customer id", null);
@@ -102,8 +101,9 @@ public class CustomerServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid details", null);
             }
 
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
-            customerBO.setSession(session);
+            /*get BO from spring container*/
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+
             dto.setId(id);
             customerBO.updateCustomer(dto);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -117,9 +117,9 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final SessionFactory sf = (SessionFactory) getServletContext().getAttribute("sf");
 
-        try (Session session = sf.openSession()) {
+
+        try {
 
             if (req.getPathInfo() == null || req.getPathInfo().replace("/", "").trim().isEmpty()) {
                 throw new HttpResponseException(400, "Invalid customer id", null);
@@ -127,8 +127,9 @@ public class CustomerServlet extends HttpServlet {
 
             String id = req.getPathInfo().replace("/", "");
 
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
-            customerBO.setSession(session);
+            /*get BO from spring container*/
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+
             customerBO.deleteCustomer(id);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 

@@ -2,11 +2,13 @@ package lk.ijse.dep.web.business.custom.impl;
 
 import lk.ijse.dep.web.business.custom.ItemBO;
 import lk.ijse.dep.web.business.util.EntityDTOMapper;
-import lk.ijse.dep.web.dao.DAOFactory;
-import lk.ijse.dep.web.dao.DAOTypes;
 import lk.ijse.dep.web.dao.custom.ItemDAO;
 import lk.ijse.dep.web.dto.ItemDTO;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,48 +16,37 @@ import java.util.List;
  * @author : Lucky Prabath <lucky.prabath94@gmail.com>
  * @since : 2021-02-26
  **/
+
+@Service
+@Transactional
 public class ItemBOImpl implements ItemBO {
 
+    @Autowired
     private ItemDAO itemDAO;
-    private Session session;
-    private EntityDTOMapper mapper = EntityDTOMapper.instance;
+    @Autowired
+    private EntityDTOMapper mapper;
 
     public ItemBOImpl() {
-        itemDAO = DAOFactory.getInstance().getDAO(DAOTypes.ITEM);
-    }
-
-    @Override
-    public void setSession(Session session) throws Exception {
-        this.session = session;
-        itemDAO.setSession(session);
     }
 
     @Override
     public void saveItem(ItemDTO dto) throws Exception {
-        session.beginTransaction();
         itemDAO.save(mapper.getItem(dto));
-        session.getTransaction().commit();
     }
 
     @Override
     public void updateItem(ItemDTO dto) throws Exception {
-        session.beginTransaction();
         itemDAO.update(mapper.getItem(dto));
-        session.getTransaction().commit();
     }
 
     @Override
     public void deleteItem(String code) throws Exception {
-        session.beginTransaction();
         itemDAO.delete(code);
-        session.getTransaction().commit();
     }
 
     @Override
     public List<ItemDTO> findAllItems() throws Exception {
-        session.beginTransaction();
         List<ItemDTO> collect = mapper.getItemDTOs(itemDAO.getAll());
-        session.getTransaction().commit();
         return collect;
     }
 }

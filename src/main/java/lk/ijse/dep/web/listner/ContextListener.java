@@ -1,6 +1,6 @@
 package lk.ijse.dep.web.listner;
 
-import lk.ijse.dep.web.util.HibernateUtil;
+import lk.ijse.dep.web.AppInitializer;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
@@ -28,10 +28,14 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
+        try {
+            Class.forName("lk.ijse.dep.web.AppInitializer");
+        } catch (ClassNotFoundException e) {
+            logger.error("Failed to load spring container", e);
+        }
+
         Properties prop = new Properties();
         try {
-            logger.info("Session factory is being initialized");
-            sce.getServletContext().setAttribute("sf", HibernateUtil.getSessionFactory());
 
             String logFilePath;
             if (prop.getProperty("app.log_dir")!= null){
@@ -50,7 +54,6 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        HibernateUtil.getSessionFactory().close();
-        logger.info("Session factory is being shut down");
+        AppInitializer.getContext().close();
     }
 }

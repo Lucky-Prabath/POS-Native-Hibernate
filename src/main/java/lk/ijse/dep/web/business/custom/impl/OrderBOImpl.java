@@ -2,8 +2,6 @@ package lk.ijse.dep.web.business.custom.impl;
 
 import lk.ijse.dep.web.business.custom.OrderBO;
 import lk.ijse.dep.web.business.util.EntityDTOMapper;
-import lk.ijse.dep.web.dao.DAOFactory;
-import lk.ijse.dep.web.dao.DAOTypes;
 import lk.ijse.dep.web.dao.custom.CustomerDAO;
 import lk.ijse.dep.web.dao.custom.ItemDAO;
 import lk.ijse.dep.web.dao.custom.OrderDAO;
@@ -12,6 +10,10 @@ import lk.ijse.dep.web.dto.OrderDTO;
 import lk.ijse.dep.web.entity.Item;
 import lk.ijse.dep.web.entity.OrderDetail;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,34 +21,27 @@ import java.util.List;
  * @author : Lucky Prabath <lucky.prabath94@gmail.com>
  * @since : 2021-02-26
  **/
+
+@Service
+@Transactional
 public class OrderBOImpl implements OrderBO {
 
+    @Autowired
     private OrderDAO orderDAO;
+    @Autowired
     private OrderDetailDAO orderDetailDAO;
+    @Autowired
     private ItemDAO itemDAO;
+    @Autowired
     private CustomerDAO customerDAO;
-    private Session session;
-    private EntityDTOMapper mapper = EntityDTOMapper.instance;
+    @Autowired
+    private EntityDTOMapper mapper;
 
     public OrderBOImpl() {
-        orderDAO = DAOFactory.getInstance().getDAO(DAOTypes.ORDER);
-        orderDetailDAO = DAOFactory.getInstance().getDAO(DAOTypes.ORDER_DETAIL);
-        itemDAO = DAOFactory.getInstance().getDAO(DAOTypes.ITEM);
-        customerDAO = DAOFactory.getInstance().getDAO(DAOTypes.CUSTOMER);
-    }
-
-    @Override
-    public void setSession(Session session) throws Exception {
-        this.session = session;
-        itemDAO.setSession(session);
-        orderDAO.setSession(session);
-        orderDetailDAO.setSession(session);
-        customerDAO.setSession(session);
     }
 
     @Override
     public void placeOrder(OrderDTO dto) throws Exception {
-        session.beginTransaction();
         try {
             boolean result = false;
 
@@ -67,11 +62,7 @@ public class OrderBOImpl implements OrderBO {
                 itemDAO.update(item);
 
             }
-
-            session.getTransaction().commit();
-
         } catch (Throwable t) {
-            session.getTransaction().rollback();
             throw t;
         }
     }

@@ -3,6 +3,8 @@ package lk.ijse.dep.web.dao.custom.impl;
 import lk.ijse.dep.web.dao.CrudDAOImpl;
 import lk.ijse.dep.web.dao.custom.CustomerDAO;
 import lk.ijse.dep.web.entity.Customer;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,6 +12,8 @@ import java.util.List;
  * @author : Lucky Prabath <lucky.prabath94@gmail.com>
  * @since : 2021-02-26
  **/
+
+@Repository
 public class CustomerDAOImpl extends CrudDAOImpl<Customer, String> implements CustomerDAO {
 
     @Override

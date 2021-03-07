@@ -1,7 +1,6 @@
 package lk.ijse.dep.web.api;
 
-import lk.ijse.dep.web.business.BOFactory;
-import lk.ijse.dep.web.business.BOTypes;
+import lk.ijse.dep.web.AppInitializer;
 import lk.ijse.dep.web.business.custom.OrderBO;
 import lk.ijse.dep.web.dto.OrderDTO;
 import lk.ijse.dep.web.exception.HttpResponseException;
@@ -39,17 +38,16 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Jsonb jsonb = JsonbBuilder.create();
-        final SessionFactory sf = (SessionFactory) getServletContext().getAttribute("sf");
 
-        try (Session session = sf.openSession()) {
+        try {
             OrderDTO dto = jsonb.fromJson(req.getReader(), OrderDTO.class);
 
             if (dto.getOrderId() == null || dto.getOrderId().trim().isEmpty() || dto.getOrderDate() == null || dto.getOrderDetails().isEmpty()) {
                 throw new HttpResponseException(400, "Invalid order details", null);
             }
 
-            OrderBO orderBO = BOFactory.getInstance().getBO(BOTypes.ORDER);
-            orderBO.setSession(session);
+            OrderBO orderBO = AppInitializer.getContext().getBean(OrderBO.class);
+
             orderBO.placeOrder(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);
         } catch (SQLIntegrityConstraintViolationException exp) {
