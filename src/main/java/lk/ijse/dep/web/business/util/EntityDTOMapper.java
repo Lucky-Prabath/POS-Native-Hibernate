@@ -55,7 +55,7 @@ public abstract class EntityDTOMapper {
         return Date.valueOf(dto.getOrderDate());
     }
 
-    public Customer getCustomer(OrderDTO dto) throws Exception {  //todo:check
+    public Customer getCustomer(OrderDTO dto) throws Exception {
         return customerDAO.get(dto.getCustomerId());
     }
 
