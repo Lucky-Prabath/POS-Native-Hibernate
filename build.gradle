@@ -37,10 +37,16 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.13.1'
 
 //    ------for spring-core
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.4'
+//    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.4' //available in spring webmvc
 
     // -------for data access
     implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.4'
+
+    //------for spring web mvc
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.4'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.2'
+
+
 
 }
 

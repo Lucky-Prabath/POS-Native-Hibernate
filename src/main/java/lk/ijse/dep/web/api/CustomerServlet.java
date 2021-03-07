@@ -1,12 +1,10 @@
 package lk.ijse.dep.web.api;
 
-import lk.ijse.dep.web.AppInitializer;
+import lk.ijse.dep.web.WebAppInitializer;
 import lk.ijse.dep.web.business.custom.CustomerBO;
 import lk.ijse.dep.web.dto.CustomerDTO;
 import lk.ijse.dep.web.exception.HttpResponseException;
 import lk.ijse.dep.web.exception.ResponseExceptionUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +45,7 @@ public class CustomerServlet extends HttpServlet {
             resp.setContentType("application/json");
 
             /*get BO from spring container*/
-            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+            CustomerBO customerBO = WebAppInitializer.getContext().getBean(CustomerBO.class);
 
             resp.getWriter().println(jsonb.toJson(customerBO.findAllCustomers()));
 
@@ -68,7 +66,7 @@ public class CustomerServlet extends HttpServlet {
             }
 
             /*get BO from spring container*/
-            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+            CustomerBO customerBO = WebAppInitializer.getContext().getBean(CustomerBO.class);
 
             customerBO.saveCustomer(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);
@@ -102,7 +100,7 @@ public class CustomerServlet extends HttpServlet {
             }
 
             /*get BO from spring container*/
-            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+            CustomerBO customerBO = WebAppInitializer.getContext().getBean(CustomerBO.class);
 
             dto.setId(id);
             customerBO.updateCustomer(dto);
@@ -128,7 +126,7 @@ public class CustomerServlet extends HttpServlet {
             String id = req.getPathInfo().replace("/", "");
 
             /*get BO from spring container*/
-            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
+            CustomerBO customerBO = WebAppInitializer.getContext().getBean(CustomerBO.class);
 
             customerBO.deleteCustomer(id);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);

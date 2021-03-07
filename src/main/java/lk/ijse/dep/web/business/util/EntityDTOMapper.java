@@ -1,6 +1,6 @@
 package lk.ijse.dep.web.business.util;
 
-import lk.ijse.dep.web.AppInitializer;
+import lk.ijse.dep.web.WebAppInitializer;
 import lk.ijse.dep.web.dao.custom.CustomerDAO;
 import lk.ijse.dep.web.dto.CustomerDTO;
 import lk.ijse.dep.web.dto.ItemDTO;
@@ -52,7 +52,7 @@ public interface EntityDTOMapper {
     }
 
     default Customer getCustomer(OrderDTO dto) throws Exception {
-        CustomerDAO customerDAO = AppInitializer.getContext().getBean(CustomerDAO.class);
+        CustomerDAO customerDAO = WebAppInitializer.getContext().getBean(CustomerDAO.class);
         return customerDAO.get(dto.getCustomerId());
     }
 

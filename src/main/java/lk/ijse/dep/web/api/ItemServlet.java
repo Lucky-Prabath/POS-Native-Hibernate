@@ -1,12 +1,10 @@
 package lk.ijse.dep.web.api;
 
-import lk.ijse.dep.web.AppInitializer;
+import lk.ijse.dep.web.WebAppInitializer;
 import lk.ijse.dep.web.business.custom.ItemBO;
 import lk.ijse.dep.web.dto.ItemDTO;
 import lk.ijse.dep.web.exception.HttpResponseException;
 import lk.ijse.dep.web.exception.ResponseExceptionUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -45,7 +43,7 @@ public class ItemServlet extends HttpServlet {
 
             String code = req.getPathInfo().replace("/", "");
 
-            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
+            ItemBO itemBO = WebAppInitializer.getContext().getBean(ItemBO.class);
 
             itemBO.deleteItem(code);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -72,7 +70,7 @@ public class ItemServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid details", null);
             }
 
-            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
+            ItemBO itemBO = WebAppInitializer.getContext().getBean(ItemBO.class);
 
             dto.setCode(code);
             itemBO.updateItem(dto);
@@ -91,7 +89,7 @@ public class ItemServlet extends HttpServlet {
 
         try {
             resp.setContentType("application/json");
-            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
+            ItemBO itemBO = WebAppInitializer.getContext().getBean(ItemBO.class);
 
             resp.getWriter().println(jsonb.toJson(itemBO.findAllItems()));
 
@@ -111,7 +109,7 @@ public class ItemServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid item details", null);
             }
 
-            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
+            ItemBO itemBO = WebAppInitializer.getContext().getBean(ItemBO.class);
 
             itemBO.saveItem(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);

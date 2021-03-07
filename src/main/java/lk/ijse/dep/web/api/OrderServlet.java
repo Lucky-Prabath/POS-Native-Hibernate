@@ -1,12 +1,10 @@
 package lk.ijse.dep.web.api;
 
-import lk.ijse.dep.web.AppInitializer;
+import lk.ijse.dep.web.WebAppInitializer;
 import lk.ijse.dep.web.business.custom.OrderBO;
 import lk.ijse.dep.web.dto.OrderDTO;
 import lk.ijse.dep.web.exception.HttpResponseException;
 import lk.ijse.dep.web.exception.ResponseExceptionUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -46,7 +44,7 @@ public class OrderServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid order details", null);
             }
 
-            OrderBO orderBO = AppInitializer.getContext().getBean(OrderBO.class);
+            OrderBO orderBO = WebAppInitializer.getContext().getBean(OrderBO.class);
 
             orderBO.placeOrder(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);
